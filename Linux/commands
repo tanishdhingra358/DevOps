@@ -1,0 +1,202 @@
+
+
+=> sudo apt update
+sudo -> superuser do
+apt -> management package tool
+
+=> sudo apt install wget
+wget means www get
+
+wget https://www.pinterest.com -> download file to current directory
+
+
+=> sudo apt install vim
+vim is a configurable text file editor
+
+FOR AWS LINUX :
+yum or dnf instead of apt
+eg. sudo yum/dnf update or sudo yum/dnf install nginx
+
+Basic Commands:
+pwd -> current directory
+ls -> list
+cd -> change directory
+touch file.txt -> create file
+mkdir-> make folder
+cp file.txt backup.txt -> copy
+mc file.txt new.txt -> move or cut/paste or rename
+rm file.txt -> remove or delete
+
+
+Process Management -> monitor, control and run processes on the system
+Admin -> view active processes -> performance analysys
+
+
+process management commands:
+ps -> running processes
+top -> cpu usage
+ps aux -> snapshot or summary of current processes(will also give process id's(pid))
+kill -9 <pid> -> kill that process
+killall -9 java -> kill all processes java or cpp or whatever
+
+
+User and Groups Management :
+linux is multiuser -> permissions matter
+
+sudo adduser devuser -> added user
+sudo passwd devuser
+sudo groupadd devops
+=>sudo usermod -ag devops devuser -> ag adds devuser to devops group
+usermod means modifying existing user and ag means append group
+
+
+
+Permissions :
+chmod -> change file permissions
+
+chmod 755 file.sh -> 
+permissions --->
+[owner, group, other] -> 7 5 5
+7 -> 111 -> read + write + execute
+5 -> 101 -> read + execute
+5 -> 101 -> read + execute
+so this means:
+owner -> full access
+groups and others -> read + execute
+
+whoami -> current user
+
+chown user:group file.sh -> change owner to user of group
+eg :-
+sudo groupadd devops
+sudo chown devuser:devops file.sh
+
+
+
+Package Management :
+apt for ubuntu, dnf or yum for aws linux
+installs, removes and updates software packages
+
+sudo apt install nginx
+
+
+TEXT EDITORS : vim and nano
+
+nano demo.txt -> enter text editor
+cat demo.txt -> print content of file
+
+
+
+Archive : combining multiple files and directories into a single file
+used in Backup/compressing data
+
+tar --> tape archive --> linux system admins to compress data
+gzip, bz2, xz  (compression methods)
+
+#tar <options> <files>
+
+c -> create
+x -> extract
+v -> verbose (means detailed)
+
+f -> file
+t -> list archive contents
+z -> gzip
+j -> bz2
+J -> xz
+
+create a tar archive file
+tar [options] archive_name files
+# tar -cvf /mnt/backup.tar /var
+
+extract a file
+#tar -xvf /mnt/backup.tar
+
+extract a tar to a specific location
+#tar -xvf /mnt/backup.tar -C /root/Desktop(space bw C and path)
+
+compress
+#tar -cvzf /mnt/backup.tar.gz /var
+cvf me z before f for gzip compression, and filename me bhi gz rakhenge followed by contents
+
+to show file size in human format
+#du -sh /var
+#du -sh /mnt/backup.tar
+
+
+Job automation -> tasks in OS 
+admin -> assign task to tools --> when he is not present 
+
+
+2 types : 
+1 at -> cmd used to exceute job once 
+2 crontab -> multiple times execute job
+
+
+#date 
+# at 8:10 AM 
+at > useradd ss
+at >
+press Ctrl+D when finished
+
+pending job -> #atq 
+remove job --> #atrm 2 
+
+restrict user from accessing at --> 
+
+#sudo vim /etc/at.deny (opening this text)
+ss 
+:wq (write & quit)
+not user ss can't schedule at jobs
+
+
+crontab vs crond 
+crond --> is the bg service(daemon)
+crontab ---> file or command in which we define jobs
+
+#systemctl start crond 
+#crontab -e (set cron jobs)
+syntax : Minute Hour Day-of-Month Month Day-of-Week Command
+eg: 0 2 * * * tar -czf /backup.tar.gz /var/www  (creates a compressed backup at 2 AM everyday)
+
+#crontab -l --> list all cron jobs 
+#crontab -r --> remove all jobs
+
+
+
+Linux --> file system
+/bin -> user binaries -> binary executable files
+/sbin -> system binaries -> fdisk,reboot,etc.
+/dev -> device files -> pendrive files, or any external devices etc.
+
+/var --> log files
+/var/tmp --> temporary files
+
+/mnt -> mount directory --> a temporary mount point for storage devices or filesystems.
+can't access the external storage device through /dev, have to mount it first and then access it in /mnt
+
+Access Control list
+
+#getfacl <name> (get permissions of user w/o group)
+setfacl (set permission)
+eg: #sudo setfacl -m u:john:r deploy.sh
+
+grep  --> global regular expression
+(used for searching)
+grep root /etc/password( means search for root in etc/passwd file)
+grep -i ignores uppercase/lowercase
+
+find --> find /home -name ss.txt(search /home for file ss.txt)
+(used for searching files)
+
+wc --> word count
+# wc -l /etc/passwd (counts line)
+# wc -w /etc/passwd (counts words)
+# wc -m /etc/passwd (counts chars.)
+# wc /etc/passwd (everything)
+
+head -> top se
+head /etc/passwd(top 10 lines)
+#head -n 15 /etc/passwd (top 15)
+
+(tail use karenge bottom se karne keliye)
